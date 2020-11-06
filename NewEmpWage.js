@@ -6,6 +6,7 @@ const WAGE_PER_HR=20;
 const IS_ABSENT=0;
 const NO_OF_WORKING_DAYS=20;
 const MAX_HRS_MONTH=160;
+let empDailyWageArr= new Array();
 //UC1-Present Absent
 {
     
@@ -68,14 +69,14 @@ console.log("UC4 Total Hrs: " +empHrs+ " Emp Wage: "+empWage);
 
 //UC5-Wages where Working hrs<160 ot max days<20
 //UC6-Arrays
-{
+
     function calcDailyWage(empHrs) {
     return empHrs * WAGE_PER_HR;
     }
-{ 
+
     let totalEmpHrs=0;
     let totalWorkingDays=0;
-    let empDailyWageArr= new Array();
+   
 
     while(totalEmpHrs<=MAX_HRS_MONTH && totalWorkingDays<NO_OF_WORKING_DAYS){
         totalWorkingDays++;
@@ -97,6 +98,59 @@ console.log("UC4 Total Hrs: " +empHrs+ " Emp Wage: "+empWage);
             "Total Hrs:"+ totalEmpHrs + " Emp Wage: "+ empWage);
 
 }
+
+
+//UC7-Array Helper Problems
+//UC7A-Use forEach for traversal
+
+let totalEmpWage=0;
+function sum(dailyWage){
+    totalEmpWage+= dailyWage;
 }
+empDailyWageArr.forEach(sum);
+console.log("UC7A-Total Days: " +totalWorkingDays+
+              "Total Hrs:" +totalEmpHrs + "Emp Wage: "+totalEmpWage  );
+    
+//UC7B-Show the day along with the daily wage
+let dailyCntr=0;
+function mapDayWithWage(dailyWage){
+    dailyCntr++;
+    return "Day " + dailyCntr + " : " +dailyWage;
 }
+let mapDayWithWageArr= empDailyWageArr.map(mapDayWithWage);
+console.log("UC7B-Daily Wage Map");
+console.log(mapDayWithWageArr);
+
+//UC7C-Show days when employess worked full time
+function fullTimeWage(dailyWage){
+    return dailyWage.includes("160");
+}
+let fullDayWageArr= mapDayWithWageArr.filter(fullTimeWage);
+console.log("UC7C-Daily Wage Filter When Full Time Wage is Earned");
+console.log(fullDayWageArr);
+
+//UC7D-Find first occurrence of Full Wage
+console.log("UC7D-First Time Fulltime wage was earned: " + mapDayWithWageArr.find(fullTimeWage));
+
+//UC7E-Check if Every Element of full time wage is truely holding full time wage
+console.log("UC7E-Check all elements have full time wage");
+console.log(fullDayWageArr.every(fullTimeWage));
+
+//UC7F-Check of there is any Part Time Wage
+function isAnyPartTimeWage(dailyWage){
+    return dailyWage.includes("80");
+}
+console.log("UC 7F- Check If any part time wage: ")
+console.log(mapDayWithWageArr.some(isAnyPartTimeWage));
+
+//UC7G-Find the number of days employee worked
+function totalDaysWorked(numOfDays,dailyWage){
+    if (dailyWage>0) return numOfDays+1;
+    return numOfDays;
+}
+
+console.log("UC7G- Number of Days Emp Worked: ")
+console.log(empDailyWageArr.reduce(totalDaysWorked,0));
+
+
 
