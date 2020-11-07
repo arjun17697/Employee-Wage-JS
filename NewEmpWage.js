@@ -9,6 +9,7 @@ const MAX_HRS_MONTH=160;
 let empDailyWageArr= new Array();
 let empDailyWageMap=new Map();
 let empDailyHrsMap= new Map();
+let empDailyHrsAndWageArr= new Array();
 //UC1-Present Absent
 {
     
@@ -88,13 +89,22 @@ console.log("UC4 Total Hrs: " +empHrs+ " Emp Wage: "+empWage);
         empDailyWageArr.push(calcDailyWage(empHrs));
         empDailyWageMap.set(totalWorkingDays,calcDailyWage(empHrs));
         empDailyHrsMap.set(totalWorkingDays,empHrs);
+        empDailyHrsAndWageArr.push(
+            {
+                dayNum:totalWorkingDays,
+                dailyHours:empHrs,
+                dailyWage:calcDailyWage(empHrs),
+                toString(){
+                    return '\nDay' + this.dayNum + '=> Working Hours are' + this.dailyHours +
+                    'And Wage Earned = ' +this.dailyWage
+                }
+            }
+        );
 }
     console.log(empDailyWageMap);
     console.log(empDailyHrsMap);
-    console.log("------------------------");
-    
 
-  {
+    {
     let empWage= totalEmpHrs*WAGE_PER_HR;
     console.log("UC5- Total Days: " +totalWorkingDays+ 
                 "Total Hrs: "+ totalEmpHrs + "Emp Wage: " +empWage);
@@ -171,8 +181,8 @@ let count=0;
 let totalHours=Array.from(empDailyHrsMap.values()).reduce(findTotal,0);
 let totalSalary=empDailyWageArr.filter(dailyWage=> dailyWage>0)
                 .reduce(findTotal,0);
-console.log("UC9A-Wage with arrow:"+"total hrs:"+
-            totalHours+ "Total Wages:"+totalSalary);
+console.log("UC9A-Wage with arrow=> "+"total hrs: "+
+            totalHours+ "Total Wages: "+totalSalary);
 
 let nonWorkingDays= new Array();
 let partWorkingDays= new Array();
@@ -186,5 +196,11 @@ empDailyHrsMap.forEach((value,key,map)=> {
 console.log("Full Working Days:" +fullWorkingDays);
 console.log("Part Working Days:" +partWorkingDays);
 console.log("Non Working Days:" +nonWorkingDays);
+
+
+//UC10 Object Creation
+console.log("UC 10 Showing Daily Hours Worked and Wage Earned:" +empDailyHrsAndWageArr);
+
+
 
 
